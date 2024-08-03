@@ -7,7 +7,7 @@
     /// <summary>
     /// Страница Личный кабинет
     /// </summary>
-    public class AccountPage : Page
+    public class AccountPage(Browser browser, AWSettings settings) : Page(browser, settings)
     {
         public const string LinkSocialButtons = "//div[@class='accountLinks']/*/*[{0}]/button";
         public const string SecurityTab = "//div[contains(@class, 'security')]";
@@ -33,9 +33,5 @@
         };
 
         public override string Url => base.Url + "account";
-
-        public AccountPage(Browser browser, AWSettings settings) : base(browser, settings)
-        {
-        }
     }
 }

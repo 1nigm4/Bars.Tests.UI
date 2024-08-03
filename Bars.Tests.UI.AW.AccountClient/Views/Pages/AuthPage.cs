@@ -2,12 +2,13 @@
 {
     using Bars.Tests.UI.AW.AccountClient.Configurations;
     using Bars.Tests.UI.Browsers;
+    using Bars.Tests.UI.Configuration;
     using Bars.Tests.UI.Views.Pages;
 
     /// <summary>
     /// Страница Авторизация
     /// </summary>
-    public class AuthPage : Page
+    public class AuthPage(Browser driver, AWSettings settings) : Page(driver, settings)
     {
         public const string LoginEmailInput = "//input[@type='email']";
         public const string LoginPasswordInput = "//input[@type='password']";
@@ -16,9 +17,5 @@
         public const string ResetPasswordButton = "//div[@class='container-reset-pass']/button";
 
         public override string Url => base.Url + "auth";
-
-        public AuthPage(Browser driver, AWSettings settings) : base(driver, settings)
-        {
-        }
     }
 }

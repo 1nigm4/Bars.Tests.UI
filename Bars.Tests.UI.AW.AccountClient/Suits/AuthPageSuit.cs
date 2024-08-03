@@ -34,7 +34,7 @@
             this.page.Click(AuthPage.LoginEntryButton);
             this.page.WaitElement(AuthPage.LoginValidations);
             var isInvalidAuth = this.page.Contains(AuthPage.LoginValidations, "Неправильный логин или пароль", index: 1);
-            Assert.IsTrue(isInvalidAuth);
+            Assert.That(isInvalidAuth);
             #endregion
 
             await this.page.RefreshAsync();
@@ -45,8 +45,11 @@
             this.page.WaitElement(AuthPage.LoginValidations);
             var isInvalidEmail = this.page.Contains(AuthPage.LoginValidations, "Не корректный email адрес", index: 1);
             var isInvalidPassword = this.page.Contains(AuthPage.LoginValidations, "Минимальное количество символов: 6", index: 2);
-            Assert.IsTrue(isInvalidEmail);
-            Assert.IsTrue(isInvalidPassword);
+            Assert.Multiple(() =>
+            {
+                Assert.That(isInvalidEmail);
+                Assert.That(isInvalidPassword);
+            });
             #endregion
         }
 
@@ -68,8 +71,8 @@
         public void Login()
         {
             var accountPage = this.browser.CreatePage<AccountPage>(this.page.Settings);
-            var authorized = this.authorizeService.Authorize(this.browser, accountPage);
-            Assert.IsTrue(authorized);
+            var isAuthorized = this.authorizeService.Authorize(this.browser, accountPage);
+            Assert.That(isAuthorized);
         }
     }
 }

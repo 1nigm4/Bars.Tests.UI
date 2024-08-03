@@ -25,7 +25,7 @@
             this.page.Click(youTubeButton);
             this.page.Click(firstCaseButton);
 
-            bool isValidLinks = true;
+            var isValidLinks = true;
             var mainWindow = driver.CurrentWindowHandle;
             var otherWindows = driver.WindowHandles.Where(window => window != mainWindow);
             var links = new List<string>(AccountPage.SocialLinks);
@@ -37,10 +37,10 @@
                 driver.Close();
             }
 
-            isValidLinks &= !links.Any();
+            isValidLinks &= links.Count == 0;
 
             driver.SwitchTo().Window(mainWindow);
-            Assert.IsTrue(isValidLinks);
+            Assert.That(isValidLinks, Is.True);
         }
 
         /// <summary>
@@ -61,9 +61,11 @@
             var isCurrentPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Не может быть меньше 6", index: 1);
             var isNewPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Не может быть меньше 6", index: 2);
             var isConfirmNewPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Поле не заполнено", index: 3);
-            Assert.IsTrue(isCurrentPasswordInvalid);
-            Assert.IsTrue(isNewPasswordInvalid);
-            Assert.IsTrue(isConfirmNewPasswordInvalid);
+            Assert.Multiple(() =>
+            {
+                Assert.That(isNewPasswordInvalid);
+                Assert.That(isCurrentPasswordInvalid);
+            });
             #endregion
 
             await this.page.RefreshAsync();
@@ -75,7 +77,7 @@
             this.page.Click(AccountPage.SecuritySaveButton);
             this.page.WaitElement(AccountPage.SecurityValidations, index: 3);
             isConfirmNewPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Пароли не совпадают", index: 3);
-            Assert.IsTrue(isConfirmNewPasswordInvalid);
+            Assert.That(isConfirmNewPasswordInvalid);
             #endregion
 
             await this.page.RefreshAsync();
@@ -88,7 +90,7 @@
             this.page.Click(AccountPage.SecuritySaveButton);
             this.page.WaitElement(AccountPage.SecurityValidations, index: 1);
             isCurrentPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Пароль введен не верно", index: 1);
-            Assert.IsTrue(isCurrentPasswordInvalid);
+            Assert.That(isCurrentPasswordInvalid);
             #endregion
         }
 
@@ -102,17 +104,19 @@
 
             #region Валидация пустой формы
             var total = this.page.Read(AccountPage.TotalDiv);
-            var nextButton = this.page.Find(AccountPage.ModalNextButton);
-            Assert.AreEqual(total, "0 ₽");
-            Assert.IsFalse(nextButton.Enabled);
+            var modalNextButton = this.page.Find(AccountPage.ModalNextButton);
+            Assert.Multiple(() =>
+            {
+                Assert.That(total, Is.EqualTo("0 ₽"));
+                Assert.That(modalNextButton.Enabled, Is.False);
+            });
             #endregion
 
             #region Валидация успешной формы
             this.AddDevelopers(4);
             total = this.page.Read(AccountPage.TotalDiv);
-            nextButton = this.page.Find(AccountPage.ModalNextButton);
-            Assert.AreEqual(total, "700 000 ₽");
-            Assert.IsTrue(nextButton.Enabled);
+            modalNextButton = this.page.Find(AccountPage.ModalNextButton);
+            Assert.That(total, Is.EqualTo("700 000 ₽"));
             #endregion
 
             #region Валидация формы Организация
@@ -126,10 +130,13 @@
             var isInnInvalid = this.page.Contains(AccountPage.BuyLicenseValidations, "Не может быть меньше 10", index: 2);
             var isKppInvalid = this.page.Contains(AccountPage.BuyLicenseValidations, "Не может быть меньше 9", index: 3);
             var isOgrnInvalid = this.page.Contains(AccountPage.BuyLicenseValidations, "Не может быть меньше 13", index: 4);
-            Assert.IsTrue(isOrgNameInvalid);
-            Assert.IsTrue(isInnInvalid);
-            Assert.IsTrue(isKppInvalid);
-            Assert.IsTrue(isOgrnInvalid);
+            Assert.Multiple(() =>
+            {
+                Assert.That(isOrgNameInvalid);
+                Assert.That(isInnInvalid);
+                Assert.That(isKppInvalid);
+                Assert.That(isOgrnInvalid);
+            });
             #endregion
         }
 

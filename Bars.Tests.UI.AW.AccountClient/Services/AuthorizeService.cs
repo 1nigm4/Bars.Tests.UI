@@ -22,7 +22,7 @@
         {
             if (returnPage.Settings is not AWSettings awSettings)
             {
-                throw new ArgumentNullException(nameof(returnPage.Settings));
+                throw new ArgumentNullException(nameof(returnPage));
             }
 
             var authPage = browser.CreatePage<AuthPage>(awSettings);

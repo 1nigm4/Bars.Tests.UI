@@ -7,7 +7,7 @@
     /// <summary>
     /// Страница Восстановление пароля
     /// </summary>
-    public class ResetPasswordPage : Page
+    public class ResetPasswordPage(Browser browser, Settings settings) : Page(browser, settings)
     {
         public const string EmailInput = "//input[@type='email']";
         public const string Validation = EmailInput + "/../div";
@@ -15,9 +15,5 @@
         public const string ContinueButton = "//button[contains(@class, 'but-res-pass')]";
 
         public override string Url => base.Url + "reset-password";
-
-        public ResetPasswordPage(Browser browser, Settings settings) : base(browser, settings)
-        {
-        }
     }
 }
