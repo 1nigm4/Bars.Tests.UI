@@ -10,11 +10,12 @@
     /// <summary>
     /// Абстрактный класс тест-кейса требующего аутентификацию
     /// </summary>
-    /// <typeparam name="TPage"></typeparam>
+    /// <typeparam name="TPage">Страница</typeparam>
     public abstract class AuthorizedSuit<TPage> : Suit<TPage> where TPage : Page
     {
         private IAuthorizeService authorizeService;
 
+        /// <inheritdoc/>
         public override void Initialize()
         {
             // Костыль - явная инициализация настроек (нет DI)
@@ -27,7 +28,6 @@
         /// <inheritdoc/>
         /// Проверяет, авторизирован ли пользователь, если нет - авторизирует
         /// </summary>
-        /// <returns></returns>
         public override async Task SetupAsync()
         {
             await base.SetupAsync();

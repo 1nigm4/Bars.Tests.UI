@@ -12,14 +12,8 @@
     /// </summary>
     public static class BrowserExtensions
     {
-        /// <summary>
-        /// Создание страницы.
-        /// Метод создан для извлечения Url адреса страницы.
-        /// </summary>
-        /// <typeparam name="TPage">Тип страницы</typeparam>
-        /// <param name="browser">Браузер</param>
-        /// <param name="settings">Настройки</param>
-        /// <returns>Страница</returns>
+        /// <inheritdoc cref="CreatePage{TPage}(Browser, IAllureService, Settings)"/>
+        /// <param name="lifecycle">Allure контекст</param>
         public static TPage CreatePage<TPage>(
             this Browser browser,
             AllureLifecycle lifecycle,
@@ -29,6 +23,15 @@
             return browser.CreatePage<TPage>(allureService, settings);
         }
 
+        /// <summary>
+        /// Создание страницы.
+        /// Метод создан для извлечения Url адреса страницы.
+        /// </summary>
+        /// <typeparam name="TPage">Тип страницы</typeparam>
+        /// <param name="browser">Браузер</param>
+        /// <param name="allureService">Allure сервис</param>
+        /// <param name="settings">Настройки</param>
+        /// <returns>Страница</returns>
         public static TPage CreatePage<TPage>(
             this Browser browser,
             IAllureService allureService,

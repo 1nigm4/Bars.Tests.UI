@@ -13,18 +13,20 @@
             this.lifecycle = lifecycle;
         }
 
-        public void Invoke(string stepName, Delegate action)
+        /// <inheritdoc/>
+        public virtual void Invoke(string stepName, Delegate action)
         {
             this.InvokeAction(stepName, action);
         }
 
-        public T Invoke<T>(string stepName, Delegate action)
+        /// <inheritdoc/>
+        public virtual T Invoke<T>(string stepName, Delegate action)
         {
             var result = this.InvokeAction(stepName, action);
-            return (T)result;
+            return (T)result!;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="Invoke(string, Delegate)"/>
         protected virtual object? InvokeAction(string stepName, Delegate action)
         {
             object? result = default;

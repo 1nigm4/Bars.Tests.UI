@@ -9,6 +9,7 @@
     /// </summary>
     internal class ConfigBuilder : IConfigBuilder
     {
+        /// <inheritdoc/>
         public void Configure<TSettings>(TSettings settings) where TSettings : Settings
         {
             var config = new ConfigurationBuilder()

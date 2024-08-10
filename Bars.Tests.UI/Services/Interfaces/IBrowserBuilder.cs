@@ -9,9 +9,9 @@
     public interface IBrowserBuilder
     {
         /// <summary>
-        /// Создает браузер по имени с параметрами запуска.
+        /// Создает браузер.
         /// </summary>
-        /// <param name="name">Наименование браузера</param>
+        /// <param name="settings">Настройки</param>
         /// <returns>Браузер</returns>
         Browser Build(Settings settings);
     }

@@ -8,10 +8,10 @@
     public interface IConfigBuilder
     {
         /// <summary>
-        /// Производит привязку файла конфигурацией с моделью настроек
+        /// Производит привязку файла конфигурации с объектом настроек
         /// </summary>
         /// <typeparam name="TSettings">Модель настроек</typeparam>
-        /// <param name="settings"></param>
+        /// <param name="settings">Объект настроек</param>
         void Configure<TSettings>(TSettings settings) where TSettings : Settings;
     }
 }

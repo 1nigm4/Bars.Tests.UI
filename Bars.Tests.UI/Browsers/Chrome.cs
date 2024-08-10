@@ -1,7 +1,6 @@
 ﻿namespace Bars.Tests.UI.Browsers
 {
     using Bars.Tests.UI.Configuration;
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
@@ -10,12 +9,8 @@
     /// <summary>
     /// Браузер Chrome
     /// </summary>
-    public class Chrome : Browser
+    public class Chrome(Settings settings) : Browser(settings)
     {
-        public Chrome(Settings settings) : base(settings)
-        {
-        }
-
         protected override void Initialize()
         {
             WebDriver webDriver;
@@ -26,7 +21,7 @@
             {
                 var uri = new Uri(Path.Combine(this.Settings.RemoteUrl, "wd", "hub"));
                 var remoteSettings = JObject.FromObject(this.Settings.RemoteSettings)
-                    .ToObject<Dictionary<string, object>>();
+                    .ToObject<Dictionary<string, object>>()!;
 
                 remoteSettings.Add("browser", this.Settings.Browser.ToLower());
                 options.AddAdditionalOption("selenoid:options", remoteSettings);

@@ -10,6 +10,7 @@
     /// </summary>
     public class BrowserBuilder : IBrowserBuilder
     {
+        /// <inheritdoc/>
         public Browser Build(Settings settings)
         {
             var browserName = settings.Browser;

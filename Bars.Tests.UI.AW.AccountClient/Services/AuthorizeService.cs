@@ -14,7 +14,8 @@
     {
         /// <summary>
         /// <inheritdoc/>
-        /// <para>Если не получилось автоматически авторизоваться, то в течении <paramref name="timeoutInSec"/> секунд
+        /// <para>Если не получилось автоматически авторизоваться, то
+        /// в течении <paramref name="timeoutInSec"/> секунд
         /// есть возможность вручную авторизоваться</para>
         /// </summary>
         /// <returns><inheritdoc/></returns>
