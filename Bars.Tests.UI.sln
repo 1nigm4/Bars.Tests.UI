@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bars.Tests.UI.AW.AccountClient", "Bars.Tests.UI.AW.AccountClient\Bars.Tests.UI.AW.AccountClient.csproj", "{9A346DE6-AE28-4EED-AAA2-2BC8EBF7E46B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bars.Tests.UI.AW.AccountClient", "Bars.Tests.UI.AW.AccountClient\Bars.Tests.UI.AW.AccountClient.csproj", "{9A346DE6-AE28-4EED-AAA2-2BC8EBF7E46B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bars.Tests.UI", "Bars.Tests.UI\Bars.Tests.UI.csproj", "{68F9FF2E-A773-4E8E-BCB0-4F17856E3CD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bars.Tests.UI", "Bars.Tests.UI\Bars.Tests.UI.csproj", "{2B2A9ABE-8D30-4862-B8F1-3D0C89A18A65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bars.Tests.UI.NUnit", "Bars.Tests.UI.NUnit\Bars.Tests.UI.NUnit.csproj", "{25E2623F-D23F-4FD4-A2A1-BDD0056F0DCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bars.Tests.UI.NUnit.AccountClient", "Bars.Tests.UI.NUnit.AccountClient\Bars.Tests.UI.NUnit.AccountClient.csproj", "{4BBD724C-E3C2-4682-B08F-5E04AE637E60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +21,18 @@ Global
 		{9A346DE6-AE28-4EED-AAA2-2BC8EBF7E46B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A346DE6-AE28-4EED-AAA2-2BC8EBF7E46B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A346DE6-AE28-4EED-AAA2-2BC8EBF7E46B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68F9FF2E-A773-4E8E-BCB0-4F17856E3CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68F9FF2E-A773-4E8E-BCB0-4F17856E3CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68F9FF2E-A773-4E8E-BCB0-4F17856E3CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68F9FF2E-A773-4E8E-BCB0-4F17856E3CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B2A9ABE-8D30-4862-B8F1-3D0C89A18A65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B2A9ABE-8D30-4862-B8F1-3D0C89A18A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B2A9ABE-8D30-4862-B8F1-3D0C89A18A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B2A9ABE-8D30-4862-B8F1-3D0C89A18A65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25E2623F-D23F-4FD4-A2A1-BDD0056F0DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25E2623F-D23F-4FD4-A2A1-BDD0056F0DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25E2623F-D23F-4FD4-A2A1-BDD0056F0DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25E2623F-D23F-4FD4-A2A1-BDD0056F0DCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BBD724C-E3C2-4682-B08F-5E04AE637E60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BBD724C-E3C2-4682-B08F-5E04AE637E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BBD724C-E3C2-4682-B08F-5E04AE637E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BBD724C-E3C2-4682-B08F-5E04AE637E60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
