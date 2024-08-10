@@ -23,7 +23,7 @@
                 var remoteSettings = JObject.FromObject(this.Settings.RemoteSettings)
                     .ToObject<Dictionary<string, object>>()!;
 
-                remoteSettings.Add("browser", this.Settings.Browser.ToLower());
+                remoteSettings.Add("browser", this.Settings.Browser);
                 options.AddAdditionalOption("selenoid:options", remoteSettings);
 
                 var capabilities = options.ToCapabilities();
@@ -34,6 +34,7 @@
                 webDriver = new ChromeDriver(options);
             }
 
+            webDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(this.Settings.TimeoutPageLoadInSec);
             this.Driver = webDriver;
         }
     }

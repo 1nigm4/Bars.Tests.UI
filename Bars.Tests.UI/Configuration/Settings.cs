@@ -31,6 +31,11 @@
         public bool InRemoteMode { get; set; }
 
         /// <summary>
+        /// Таймаут загрузки страницы в секундах
+        /// </summary>
+        public int TimeoutPageLoadInSec { get; set; }
+
+        /// <summary>
         /// Настройки Selenoid
         /// </summary>
         public RemoteSettings RemoteSettings { get; set; }

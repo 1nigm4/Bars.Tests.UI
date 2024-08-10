@@ -18,9 +18,10 @@
     [AllureNUnit]
     public abstract class Suit<TPage> where TPage : Page
     {
-        protected Browser browser;
-        protected Settings settings;
-        protected TPage page;
+        protected Browser Browser { get; private set; }
+        protected Settings Settings { get; set; }
+        protected TPage Page { get; private set; }
+        protected string MainWindow { get; private set; }
 
         /// <summary>
         /// Однократная инициализация тест-кейса.
@@ -30,15 +31,15 @@
         [OneTimeSetUp]
         public virtual void Initialize()
         {
-            this.settings ??= new Settings();
+            this.Settings ??= new Settings();
             var configBuilder = new ConfigBuilder();
-            configBuilder.Configure(this.settings);
+            configBuilder.Configure(this.Settings);
 
             var lifecycle = AllureLifecycle.Instance;
 
             var browserBuilder = new BrowserBuilder();
-            this.browser = browserBuilder.Build(this.settings);
-            this.page = this.browser.CreatePage<TPage>(lifecycle, this.settings);
+            this.Browser = browserBuilder.Build(this.Settings);
+            this.Page = this.Browser.CreatePage<TPage>(lifecycle, this.Settings);
         }
 
         /// <summary>
@@ -49,10 +50,30 @@
         [SetUp]
         public virtual async Task SetupAsync()
         {
-            var isInPage = this.browser.Driver.Url.Contains(page.Url);
+            var driver = this.Browser.Driver;
+            this.MainWindow = driver.CurrentWindowHandle;
+            var isInPage = driver.Url.Contains(Page.Url);
             if (!isInPage)
             {
-                await this.page.OpenAsync();
+                await this.Page.OpenAsync();
+            }
+        }
+
+        /// <summary>
+        /// После каждого теста.
+        /// Переключает на главную вкладку.
+        /// </summary>
+        [TearDown]
+        public virtual async Task TeadDownAsync()
+        {
+            try
+            {
+                this.Browser.Driver.SwitchTo()
+                .Window(this.MainWindow);
+            }
+            catch
+            {
+                await this.Page.OpenAsync();
             }
         }
 
@@ -62,7 +83,7 @@
         [OneTimeTearDown]
         public virtual void Dispose()
         {
-            this.browser.Dispose();
+            this.Browser.Dispose();
         }
     }
 }

@@ -16,27 +16,23 @@
         [Test]
         public void Links()
         {
-            var driver = this.browser.Driver;
+            var driver = this.Browser.Driver;
 
-            this.page.Click(AccountPage.LinkSocialButtons, index: 1);
-            this.page.Click(AccountPage.LinkSocialButtons, index: 2);
-            this.page.Click(AccountPage.LinkSocialButtons, index: 3);
+            this.Page.Click(AccountPage.LinkSocialButtons, index: 1);
+            this.Page.Click(AccountPage.LinkSocialButtons, index: 2);
+            this.Page.Click(AccountPage.LinkSocialButtons, index: 3);
 
             var isValidLinks = true;
-            var mainWindow = driver.CurrentWindowHandle;
-            var otherWindows = driver.WindowHandles.Where(window => window != mainWindow);
+            var otherWindows = driver.WindowHandles.Where(window => window != this.MainWindow);
             var links = new List<string>(AccountPage.SocialLinks);
             foreach (var window in otherWindows)
             {
                 driver.SwitchTo().Window(window);
                 isValidLinks &= links.Contains(driver.Url);
                 links.Remove(driver.Url);
-                driver.Close();
             }
 
             isValidLinks &= links.Count == 0;
-
-            driver.SwitchTo().Window(mainWindow);
             Assert.That(isValidLinks, Is.True);
         }
 
@@ -49,15 +45,15 @@
         public async Task SecurityValidation()
         {
             #region Валидация минимального кол-во символов и заполненности
-            this.page.Click(AccountPage.SecurityTab);
-            this.page.WaitElement(AccountPage.SecurityPasswordInputs);
-            this.page.Write(AccountPage.SecurityPasswordInputs, "12345", index: 1);
-            this.page.Write(AccountPage.SecurityPasswordInputs, "12345", index: 2);
-            this.page.Click(AccountPage.SecuritySaveButton);
-            this.page.WaitElement(AccountPage.SecurityValidations);
-            var isCurrentPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Не может быть меньше 6", index: 1);
-            var isNewPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Не может быть меньше 6", index: 2);
-            var isConfirmNewPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Поле не заполнено", index: 3);
+            this.Page.Click(AccountPage.SecurityTab);
+            this.Page.WaitElement(AccountPage.SecurityPasswordInputs);
+            this.Page.Write(AccountPage.SecurityPasswordInputs, "12345", index: 1);
+            this.Page.Write(AccountPage.SecurityPasswordInputs, "12345", index: 2);
+            this.Page.Click(AccountPage.SecuritySaveButton);
+            this.Page.WaitElement(AccountPage.SecurityValidations);
+            var isCurrentPasswordInvalid = this.Page.Contains(AccountPage.SecurityValidations, "Не может быть меньше 6", index: 1);
+            var isNewPasswordInvalid = this.Page.Contains(AccountPage.SecurityValidations, "Не может быть меньше 6", index: 2);
+            var isConfirmNewPasswordInvalid = this.Page.Contains(AccountPage.SecurityValidations, "Поле не заполнено", index: 3);
             Assert.Multiple(() =>
             {
                 Assert.That(isNewPasswordInvalid);
@@ -65,28 +61,28 @@
             });
             #endregion
 
-            await this.page.RefreshAsync();
+            await this.Page.RefreshAsync();
 
             #region Валидация совпадения Новый пароль и Подтвердите пароль
-            this.page.Click(AccountPage.SecurityTab);
-            this.page.Write(AccountPage.SecurityPasswordInputs, "12345", index: 2);
-            this.page.Write(AccountPage.SecurityPasswordInputs, "123456", index: 3);
-            this.page.Click(AccountPage.SecuritySaveButton);
-            this.page.WaitElement(AccountPage.SecurityValidations, index: 3);
-            isConfirmNewPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Пароли не совпадают", index: 3);
+            this.Page.Click(AccountPage.SecurityTab);
+            this.Page.Write(AccountPage.SecurityPasswordInputs, "12345", index: 2);
+            this.Page.Write(AccountPage.SecurityPasswordInputs, "123456", index: 3);
+            this.Page.Click(AccountPage.SecuritySaveButton);
+            this.Page.WaitElement(AccountPage.SecurityValidations, index: 3);
+            isConfirmNewPasswordInvalid = this.Page.Contains(AccountPage.SecurityValidations, "Пароли не совпадают", index: 3);
             Assert.That(isConfirmNewPasswordInvalid);
             #endregion
 
-            await this.page.RefreshAsync();
+            await this.Page.RefreshAsync();
 
             #region Валидация Текущий пароль при сохранении
-            this.page.Click(AccountPage.SecurityTab);
-            this.page.Write(AccountPage.SecurityPasswordInputs, "1234567", index: 1);
-            this.page.Write(AccountPage.SecurityPasswordInputs, "1234567", index: 2);
-            this.page.Write(AccountPage.SecurityPasswordInputs, "1234567", index: 3);
-            this.page.Click(AccountPage.SecuritySaveButton);
-            this.page.WaitElement(AccountPage.SecurityValidations, index: 1);
-            isCurrentPasswordInvalid = this.page.Contains(AccountPage.SecurityValidations, "Пароль введен не верно", index: 1);
+            this.Page.Click(AccountPage.SecurityTab);
+            this.Page.Write(AccountPage.SecurityPasswordInputs, "1234567", index: 1);
+            this.Page.Write(AccountPage.SecurityPasswordInputs, "1234567", index: 2);
+            this.Page.Write(AccountPage.SecurityPasswordInputs, "1234567", index: 3);
+            this.Page.Click(AccountPage.SecuritySaveButton);
+            this.Page.WaitElement(AccountPage.SecurityValidations, index: 1);
+            isCurrentPasswordInvalid = this.Page.Contains(AccountPage.SecurityValidations, "Пароль введен не верно", index: 1);
             Assert.That(isCurrentPasswordInvalid);
             #endregion
         }
@@ -97,11 +93,11 @@
         [Test]
         public void ValidationBuyLicense()
         {
-            this.page.Click(AccountPage.BuyLicenseButton);
+            this.Page.Click(AccountPage.BuyLicenseButton);
 
             #region Валидация пустой формы
-            var total = this.page.Read(AccountPage.TotalDiv);
-            var modalNextButton = this.page.Find(AccountPage.ModalNextButton);
+            var total = this.Page.Read(AccountPage.TotalDiv);
+            var modalNextButton = this.Page.Find(AccountPage.ModalNextButton);
             Assert.Multiple(() =>
             {
                 Assert.That(total, Is.EqualTo("0 ₽"));
@@ -111,22 +107,22 @@
 
             #region Валидация успешной формы
             this.AddDevelopers(4);
-            total = this.page.Read(AccountPage.TotalDiv);
-            modalNextButton = this.page.Find(AccountPage.ModalNextButton);
+            total = this.Page.Read(AccountPage.TotalDiv);
+            modalNextButton = this.Page.Find(AccountPage.ModalNextButton);
             Assert.That(total, Is.EqualTo("700 000 ₽"));
             #endregion
 
             #region Валидация формы Организация
-            this.page.Click(AccountPage.ModalNextButton);
-            this.page.Write(AccountPage.BuyLicenseInputs, " ", index: 1);
-            this.page.Write(AccountPage.BuyLicenseInputs, "123", index: 2);
-            this.page.Write(AccountPage.BuyLicenseInputs, "123", index: 3);
-            this.page.Write(AccountPage.BuyLicenseInputs, "123", index: 4);
-            this.page.WaitElement(AccountPage.BuyLicenseValidations);
-            var isOrgNameInvalid = this.page.Contains(AccountPage.BuyLicenseValidations, "Поле не заполнено", index: 1);
-            var isInnInvalid = this.page.Contains(AccountPage.BuyLicenseValidations, "Не может быть меньше 10", index: 2);
-            var isKppInvalid = this.page.Contains(AccountPage.BuyLicenseValidations, "Не может быть меньше 9", index: 3);
-            var isOgrnInvalid = this.page.Contains(AccountPage.BuyLicenseValidations, "Не может быть меньше 13", index: 4);
+            this.Page.Click(AccountPage.ModalNextButton);
+            this.Page.Write(AccountPage.BuyLicenseInputs, " ", index: 1);
+            this.Page.Write(AccountPage.BuyLicenseInputs, "123", index: 2);
+            this.Page.Write(AccountPage.BuyLicenseInputs, "123", index: 3);
+            this.Page.Write(AccountPage.BuyLicenseInputs, "123", index: 4);
+            this.Page.WaitElement(AccountPage.BuyLicenseValidations);
+            var isOrgNameInvalid = this.Page.Contains(AccountPage.BuyLicenseValidations, "Поле не заполнено", index: 1);
+            var isInnInvalid = this.Page.Contains(AccountPage.BuyLicenseValidations, "Не может быть меньше 10", index: 2);
+            var isKppInvalid = this.Page.Contains(AccountPage.BuyLicenseValidations, "Не может быть меньше 9", index: 3);
+            var isOgrnInvalid = this.Page.Contains(AccountPage.BuyLicenseValidations, "Не может быть меньше 13", index: 4);
             Assert.Multiple(() =>
             {
                 Assert.That(isOrgNameInvalid);
@@ -144,7 +140,7 @@
         {
             for (var i = 0; i < count; i++)
             {
-                this.page.Click(AccountPage.DeveloperPlusButton);
+                this.Page.Click(AccountPage.DeveloperPlusButton);
             }
         }
     }

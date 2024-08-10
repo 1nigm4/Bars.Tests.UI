@@ -17,17 +17,17 @@
         public void Validation()
         {
             #region Валидация корректности почты
-            this.page.Write(ResetPasswordPage.EmailInput, "aasdasdasd");
-            this.page.WaitElement(ResetPasswordPage.Validation);
-            var isEmailInvalid = this.page.Contains(ResetPasswordPage.Validation, "Не корректный email адрес");
+            this.Page.Write(ResetPasswordPage.EmailInput, "aasdasdasd");
+            this.Page.WaitElement(ResetPasswordPage.Validation);
+            var isEmailInvalid = this.Page.Contains(ResetPasswordPage.Validation, "Не корректный email адрес");
             Assert.IsTrue(isEmailInvalid);
             #endregion
 
             #region Валидация существования почты в системе
-            this.page.Write(ResetPasswordPage.EmailInput, "aw@aw.aw");
-            this.page.Click(ResetPasswordPage.ContinueButton);
-            this.page.WaitElement(ResetPasswordPage.ValidationToast, condition: ExpectedConditions.ElementIsVisible);
-            isEmailInvalid = this.page.Contains(ResetPasswordPage.ValidationToast, "Почта не найдена");
+            this.Page.Write(ResetPasswordPage.EmailInput, "aw@aw.aw");
+            this.Page.Click(ResetPasswordPage.ContinueButton);
+            this.Page.WaitElement(ResetPasswordPage.ValidationToast, condition: ExpectedConditions.ElementIsVisible);
+            isEmailInvalid = this.Page.Contains(ResetPasswordPage.ValidationToast, "Почта не найдена");
             Assert.IsTrue(isEmailInvalid);
             #endregion
         }

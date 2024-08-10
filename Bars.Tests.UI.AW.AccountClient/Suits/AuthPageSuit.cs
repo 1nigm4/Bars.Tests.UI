@@ -19,7 +19,7 @@
         public override void Initialize()
         {
             this.authorizeService = new AuthorizeService();
-            this.settings = new AWSettings();
+            this.Settings = new AWSettings();
             base.Initialize();
         }
 
@@ -30,22 +30,22 @@
         public async Task Validation()
         {
             #region Валидация корректных данных
-            this.page.Write(AuthPage.LoginEmailInput, "test@bars.group");
-            this.page.Write(AuthPage.LoginPasswordInput, "123456");
-            this.page.Click(AuthPage.LoginEntryButton);
-            this.page.WaitElement(AuthPage.LoginValidations);
-            var isInvalidAuth = this.page.Contains(AuthPage.LoginValidations, "Неправильный логин или пароль", index: 1);
+            this.Page.Write(AuthPage.LoginEmailInput, "test@bars.group");
+            this.Page.Write(AuthPage.LoginPasswordInput, "123456");
+            this.Page.Click(AuthPage.LoginEntryButton);
+            this.Page.WaitElement(AuthPage.LoginValidations);
+            var isInvalidAuth = this.Page.Contains(AuthPage.LoginValidations, "Неправильный логин или пароль", index: 1);
             Assert.That(isInvalidAuth);
             #endregion
 
-            await this.page.RefreshAsync();
+            await this.Page.RefreshAsync();
 
             #region Валидация ограничений полей
-            this.page.Write(AuthPage.LoginEmailInput, "test");
-            this.page.Write(AuthPage.LoginPasswordInput, "123");
-            this.page.WaitElement(AuthPage.LoginValidations);
-            var isInvalidEmail = this.page.Contains(AuthPage.LoginValidations, "Не корректный email адрес", index: 1);
-            var isInvalidPassword = this.page.Contains(AuthPage.LoginValidations, "Минимальное количество символов: 6", index: 2);
+            this.Page.Write(AuthPage.LoginEmailInput, "test");
+            this.Page.Write(AuthPage.LoginPasswordInput, "123");
+            this.Page.WaitElement(AuthPage.LoginValidations);
+            var isInvalidEmail = this.Page.Contains(AuthPage.LoginValidations, "Не корректный email адрес", index: 1);
+            var isInvalidPassword = this.Page.Contains(AuthPage.LoginValidations, "Минимальное количество символов: 6", index: 2);
             Assert.Multiple(() =>
             {
                 Assert.That(isInvalidEmail);
@@ -60,8 +60,8 @@
         [Test, Order(2)]
         public void ResetPass()
         {
-            this.page.Click(AuthPage.ResetPasswordButton);
-            this.page.WaitNavigate<ResetPasswordPage>();
+            this.Page.Click(AuthPage.ResetPasswordButton);
+            this.Page.WaitNavigate<ResetPasswordPage>();
             Assert.Pass();
         }
 
@@ -71,8 +71,8 @@
         [Test, Order(3)]
         public void Login()
         {
-            var accountPage = this.browser.CreatePage<AccountPage>(this.page.AllureService, this.page.Settings);
-            var isAuthorized = this.authorizeService.Authorize(this.browser, accountPage);
+            var accountPage = this.Browser.CreatePage<AccountPage>(this.Page.AllureService, this.Page.Settings);
+            var isAuthorized = this.authorizeService.Authorize(this.Browser, accountPage);
             Assert.That(isAuthorized);
         }
     }

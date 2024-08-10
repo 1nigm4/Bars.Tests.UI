@@ -19,7 +19,7 @@
         public override void Initialize()
         {
             // Костыль - явная инициализация настроек (нет DI)
-            this.settings = new AWSettings();
+            this.Settings = new AWSettings();
             this.authorizeService = new AuthorizeService();
             base.Initialize();
         }
@@ -31,7 +31,7 @@
         public override async Task SetupAsync()
         {
             await base.SetupAsync();
-            var authorized = this.authorizeService.Authorize(this.browser, this.page);
+            var authorized = this.authorizeService.Authorize(this.Browser, this.Page);
             if (authorized)
             {
                 await base.SetupAsync();
