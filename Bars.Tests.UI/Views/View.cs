@@ -1,6 +1,8 @@
 ﻿namespace Bars.Tests.UI.Views
 {
     using Bars.Tests.UI.Browsers;
+    using Bars.Tests.UI.Extensions;
+    using Bars.Tests.UI.Services.Interfaces;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Support.UI;
     using SeleniumExtras.WaitHelpers;
@@ -10,11 +12,13 @@
     /// </summary>
     public class View
     {
-        protected Browser browser;
+        protected readonly Browser browser;
+        public IAllureService AllureService { get; init; }
 
-        public View(Browser browser)
+        public View(Browser browser, IAllureService allureService)
         {
             this.browser = browser;
+            this.AllureService = allureService;
         }
 
         /// <summary>
@@ -27,7 +31,8 @@
         public virtual string Read(string selector, Func<string, By>? by = null, int index = 1)
         {
             var element = this.Find(selector, by, index);
-            return element.Text;
+            var elementName = this.GetElementName(selector, index);
+            return this.AllureService.Invoke<string>($"Чтение '{elementName}'", () => element.Text);
         }
 
         /// <summary>
@@ -46,7 +51,8 @@
                 element.Clear();
             }
 
-            element.SendKeys(text);
+            var elementName = this.GetElementName(selector, index);
+            this.AllureService.Invoke($"Заполнение '{elementName}'", () => element.SendKeys(text));
         }
 
         /// <summary>
@@ -58,12 +64,12 @@
         /// <param name="index">Индекс</param>
         public virtual bool Contains(string selector, string text, Func<string, By>? by = null, int index = 1)
         {
-            var elementText = this.Read(selector, by, index)
+            var webElementText = this.Read(selector, by, index)
                 .ToLower()
                 .Trim();
             text = text.ToLower()
                 .Trim();
-            return elementText.Contains(text);
+            return webElementText.Contains(text);
         }
 
         /// <summary>
@@ -76,7 +82,8 @@
         {
             this.WaitElement(selector, ExpectedConditions.ElementToBeClickable, by, index);
             var element = this.Find(selector, by, index);
-            element.Click();
+            var elementName = this.GetElementName(selector, index);
+            this.AllureService.Invoke($"Нажатие '{elementName}'", () => element.Click());
         }
 
         /// <summary>
@@ -103,7 +110,8 @@
             var elementSelector = this.CreateSelector(selector, by, index);
             var expectedCondition = condition(elementSelector);
 
-            wait.Until(expectedCondition);
+            var elementName = this.GetElementName(selector, index);
+            this.AllureService.Invoke($"Ожидание '{elementName}'", () => wait.Until(expectedCondition));
         }
 
         /// <summary>
@@ -117,7 +125,8 @@
         public virtual IWebElement Find(string selector, Func<string, By>? by = null, int index = 1)
         {
             var elementSelector = this.CreateSelector(selector, by, index);
-            return this.browser.Driver.FindElement(elementSelector);
+            var elementName = this.GetElementName(selector, index);
+            return this.AllureService.Invoke<IWebElement>($"Поиск '{elementName}'", () => this.browser.Driver.FindElement(elementSelector));
         }
 
         /// <summary>

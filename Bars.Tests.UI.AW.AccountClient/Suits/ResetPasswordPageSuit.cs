@@ -1,12 +1,13 @@
 ﻿namespace Bars.Tests.UI.AW.AccountClient.Suits
 {
-    using Bars.Tests.UI.AW.AccountClient.Views.Pages;
+    using Bars.Tests.UI.AW.AccountClient.Views.Pages.Authentication;
     using Bars.Tests.UI.Suits;
     using SeleniumExtras.WaitHelpers;
 
     /// <summary>
     /// Тест-кейсы страницы Восстановление пароля
     /// </summary>
+    [TestFixture]
     public class ResetPasswordPageSuit : Suit<ResetPasswordPage>
     {
         /// <summary>

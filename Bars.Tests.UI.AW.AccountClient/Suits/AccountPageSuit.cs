@@ -1,7 +1,7 @@
 ﻿namespace Bars.Tests.UI.AW.AccountClient.Suits
 {
     using Bars.Tests.UI.AW.AccountClient.Suits.Base;
-    using Bars.Tests.UI.AW.AccountClient.Views.Pages;
+    using Bars.Tests.UI.AW.AccountClient.Views.Pages.PersonalArea;
 
     /// <summary>
     /// Тест-кейсы страницы Личный кабинет
@@ -17,13 +17,10 @@
         public void Links()
         {
             var driver = this.browser.Driver;
-            var telegramButton = string.Format(AccountPage.LinkSocialButtons, 1);
-            var youTubeButton = string.Format(AccountPage.LinkSocialButtons, 2);
-            var firstCaseButton = string.Format(AccountPage.LinkSocialButtons, 3);
 
-            this.page.Click(telegramButton);
-            this.page.Click(youTubeButton);
-            this.page.Click(firstCaseButton);
+            this.page.Click(AccountPage.LinkSocialButtons, index: 1);
+            this.page.Click(AccountPage.LinkSocialButtons, index: 2);
+            this.page.Click(AccountPage.LinkSocialButtons, index: 3);
 
             var isValidLinks = true;
             var mainWindow = driver.CurrentWindowHandle;

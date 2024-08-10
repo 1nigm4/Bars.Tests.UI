@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Bars.Tests.UI.AW.AccountClient.Configurations;
     using Bars.Tests.UI.AW.AccountClient.Services;
-    using Bars.Tests.UI.Services;
+    using Bars.Tests.UI.Services.Interfaces;
     using Bars.Tests.UI.Suits;
     using Bars.Tests.UI.Views.Pages;
 

@@ -1,5 +1,7 @@
 ﻿namespace Bars.Tests.UI.Suits
 {
+    using Allure.Net.Commons;
+    using Allure.NUnit;
     using Bars.Tests.UI.Browsers;
     using Bars.Tests.UI.Configuration;
     using Bars.Tests.UI.Extensions;
@@ -11,6 +13,9 @@
     /// Абстрактный класс тест-кейсов
     /// </summary>
     /// <typeparam name="TPage"></typeparam>
+    [TestFixture]
+    [Parallelizable]
+    [AllureNUnit]
     public abstract class Suit<TPage> where TPage : Page
     {
         protected Browser browser;
@@ -28,9 +33,11 @@
             var configBuilder = new ConfigBuilder();
             configBuilder.Configure(this.settings);
 
+            var lifecycle = AllureLifecycle.Instance;
+
             var browserBuilder = new BrowserBuilder();
             this.browser = browserBuilder.Build(this.settings);
-            this.page = this.browser.CreatePage<TPage>(this.settings);
+            this.page = this.browser.CreatePage<TPage>(lifecycle, this.settings);
         }
 
         /// <summary>

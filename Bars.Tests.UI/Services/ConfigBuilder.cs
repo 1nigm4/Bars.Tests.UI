@@ -1,6 +1,7 @@
 ﻿namespace Bars.Tests.UI.Services
 {
     using Bars.Tests.UI.Configuration;
+    using Bars.Tests.UI.Services.Interfaces;
     using Microsoft.Extensions.Configuration;
 
     /// <summary>

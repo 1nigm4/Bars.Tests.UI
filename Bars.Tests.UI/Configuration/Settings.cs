@@ -19,5 +19,20 @@
         /// Параметры запуска браузера
         /// </summary>
         public string[] Arguments { get; set; }
+
+        /// <summary>
+        /// Адрес Selenoid
+        /// </summary>
+        public string RemoteUrl { get; set; }
+
+        /// <summary>
+        /// В удаленном режиме
+        /// </summary>
+        public bool InRemoteMode { get; set; }
+
+        /// <summary>
+        /// Настройки Selenoid
+        /// </summary>
+        public RemoteSettings RemoteSettings { get; set; }
     }
 }

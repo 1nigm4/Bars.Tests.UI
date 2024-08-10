@@ -2,9 +2,10 @@
 {
     using Bars.Tests.UI.AW.AccountClient.Configurations;
     using Bars.Tests.UI.AW.AccountClient.Services;
-    using Bars.Tests.UI.AW.AccountClient.Views.Pages;
+    using Bars.Tests.UI.AW.AccountClient.Views.Pages.Authentication;
+    using Bars.Tests.UI.AW.AccountClient.Views.Pages.PersonalArea;
     using Bars.Tests.UI.Extensions;
-    using Bars.Tests.UI.Services;
+    using Bars.Tests.UI.Services.Interfaces;
     using Bars.Tests.UI.Suits;
 
     /// <summary>
@@ -70,7 +71,7 @@
         [Test, Order(3)]
         public void Login()
         {
-            var accountPage = this.browser.CreatePage<AccountPage>(this.page.Settings);
+            var accountPage = this.browser.CreatePage<AccountPage>(this.page.AllureService, this.page.Settings);
             var isAuthorized = this.authorizeService.Authorize(this.browser, accountPage);
             Assert.That(isAuthorized);
         }

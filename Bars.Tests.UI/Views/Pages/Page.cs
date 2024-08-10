@@ -1,11 +1,12 @@
 ﻿namespace Bars.Tests.UI.Views.Pages
 {
     using Bars.Tests.UI.Browsers;
-    using OpenQA.Selenium.Support.UI;
-    using OpenQA.Selenium;
-    using SeleniumExtras.WaitHelpers;
-    using Bars.Tests.UI.Extensions;
     using Bars.Tests.UI.Configuration;
+    using Bars.Tests.UI.Extensions;
+    using Bars.Tests.UI.Services.Interfaces;
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Support.UI;
+    using SeleniumExtras.WaitHelpers;
 
     /// <summary>
     /// Абстрактный класс страницы
@@ -22,9 +23,11 @@
         /// </summary>
         public Settings Settings { get; }
 
-        public Page(Browser browser, Settings settings) : base(browser)
+        public Page(
+            Browser browser,
+            IAllureService allureService,
+            Settings settings) : base(browser, allureService)
         {
-            this.browser = browser;
             this.Settings = settings;
         }
 
@@ -33,8 +36,9 @@
         /// </summary>
         public virtual async Task OpenAsync()
         {
-            await this.browser.Driver.Navigate()
-                .GoToUrlAsync(this.Url);
+            await this.AllureService.Invoke<Task>(
+                $"Открытие страницы '{this.Url}'",
+                async () => await this.browser.Driver.Navigate().GoToUrlAsync(this.Url));
         }
 
         /// <summary>
@@ -42,7 +46,9 @@
         /// </summary>
         public virtual async Task RefreshAsync()
         {
-            await this.browser.Driver.Navigate().RefreshAsync();
+            await this.AllureService.Invoke<Task>(
+                $"Обновление страницы",
+                async () => await this.browser.Driver.Navigate().RefreshAsync());
         }
 
         /// <summary>
@@ -56,7 +62,7 @@
             Func<string, Func<IWebDriver, bool>> condition = null,
             int timeoutInSec = 10) where TPage : Page
         {
-            page ??= this.browser.CreatePage<TPage>(this.Settings);
+            page ??= this.browser.CreatePage<TPage>(this.AllureService, this.Settings);
             this.WaitNavigate(page.Url, condition, timeoutInSec);
         }
 
@@ -78,7 +84,7 @@
             condition ??= ExpectedConditions.UrlContains;
             var expectedCondition = condition(url);
 
-            wait.Until(expectedCondition);
+            this.AllureService.Invoke($"Ожидание перехода на страницу '{url}'", () => wait.Until(expectedCondition));
         }
     }
 }

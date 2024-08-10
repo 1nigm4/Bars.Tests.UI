@@ -9,11 +9,11 @@
     public abstract class Browser : IDisposable
     {
         public WebDriver Driver { get; protected set; }
-        protected Settings settings;
+        protected Settings Settings { get; init; }
 
         protected Browser(Settings settings)
         {
-            this.settings = settings;
+            this.Settings = settings;
             this.Initialize();
         }
 

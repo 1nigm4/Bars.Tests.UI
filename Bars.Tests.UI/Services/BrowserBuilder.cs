@@ -3,6 +3,7 @@
     using System.Reflection;
     using Bars.Tests.UI.Browsers;
     using Bars.Tests.UI.Configuration;
+    using Bars.Tests.UI.Services.Interfaces;
 
     /// <summary>
     /// <inheritdoc cref="IBrowserBuilder"/>
@@ -12,7 +13,6 @@
         public Browser Build(Settings settings)
         {
             var browserName = settings.Browser;
-            var optionsName = browserName + "Options";
             var browserType = Assembly.GetCallingAssembly()
                 .GetTypes()
                 .First(t => t.Name == browserName);

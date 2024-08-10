@@ -1,10 +1,10 @@
 ﻿namespace Bars.Tests.UI.AW.AccountClient.Services
 {
     using Bars.Tests.UI.AW.AccountClient.Configurations;
-    using Bars.Tests.UI.AW.AccountClient.Views.Pages;
+    using Bars.Tests.UI.AW.AccountClient.Views.Pages.Authentication;
     using Bars.Tests.UI.Browsers;
     using Bars.Tests.UI.Extensions;
-    using Bars.Tests.UI.Services;
+    using Bars.Tests.UI.Services.Interfaces;
     using Bars.Tests.UI.Views.Pages;
 
     /// <summary>
@@ -25,7 +25,7 @@
                 throw new ArgumentNullException(nameof(returnPage));
             }
 
-            var authPage = browser.CreatePage<AuthPage>(awSettings);
+            var authPage = browser.CreatePage<AuthPage>(returnPage.AllureService, awSettings);
             var needAuthorize = browser.Driver.Url.Contains(authPage.Url);
             if (needAuthorize)
             {

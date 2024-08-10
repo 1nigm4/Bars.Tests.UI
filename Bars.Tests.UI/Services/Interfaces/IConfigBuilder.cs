@@ -1,4 +1,4 @@
-﻿namespace Bars.Tests.UI.Services
+﻿namespace Bars.Tests.UI.Services.Interfaces
 {
     using Bars.Tests.UI.Configuration;
 
